@@ -1,0 +1,44 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <input type="text" id="CategoryId" />
+    <button onclick="LoadData()" type="submit">Show Time</button>
+    <div id="div1"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        function LoadData() {
+            var CategoryId = document.getElementById("CategoryId").value;
+            var divElem = document.getElementById("div1");
+
+            $.ajax({
+                url: "http://localhost:5230/api/Category/" + CategoryId,
+                success: function (result) {
+                    if (!result) {
+                        divElem.innerHTML = "<p>Category not found.</p>";
+                        return;
+                    }
+
+                    // Build the HTML
+                    var html = "<h3>Category: " + result.name + "</h3>";
+                    html += "<h4>Products:</h4><ul>";
+                    for (var i = 0; i < result.products.length; i++) {
+                        html += "<li>" + result.products[i].name + "</li>";
+                    }
+                    html += "</ul>";
+
+                    divElem.innerHTML = html;
+                },
+                error: function () {
+                    divElem.innerHTML = "<p style='color:red;'>An error occurred while loading the category.</p>";
+                }
+            });
+        }
+    </script>
+</body>
+</html>

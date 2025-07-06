@@ -15,15 +15,15 @@ namespace API_Task.Controllers
             _productRepository = productRepository;
         }
         [HttpGet]
-        public IActionResult GetAllProducts()
+        public async Task<IActionResult> GetAllProductsAsync()
         {
-            IEnumerable<Product> products = _productRepository.GetAll();
+            IEnumerable<Product> products = await _productRepository.GetAllAsync();
             return Ok(products);
         }
         [HttpGet("{id:int}")]
-        public IActionResult GetProductById(int id)
+        public async Task<IActionResult> GetProductByIdAsync(int id)
         {
-            Product product = _productRepository.GetById(id);
+            Product product = await _productRepository.GetByIdAsync(id);
             if (product == null)
             {
                 return NotFound();
@@ -31,16 +31,16 @@ namespace API_Task.Controllers
             return Ok(product);
         }
         [HttpPost]
-        public IActionResult AddProduct(Product product) 
+        public async Task<IActionResult> AddProductAsync(Product product) 
         {
-            _productRepository.Add(product);
-            _productRepository.Save();
+            await _productRepository.AddAsync(product);
+            await _productRepository.SaveAsync();
             return CreatedAtAction("GetProductById", new { id = product.Id}, product);
         }
         [HttpPut("{id:int}")]
-        public IActionResult UpdateProduct(int id, Product product) 
+        public async Task<IActionResult> UpdateProductAsync(int id, Product product) 
         {
-            Product? exsitingProduct = _productRepository.GetById(id);
+            Product? exsitingProduct = await _productRepository.GetByIdAsync(id);
             if (exsitingProduct != null)
             {
                 exsitingProduct.Name = product.Name;
@@ -48,19 +48,19 @@ namespace API_Task.Controllers
                 exsitingProduct.Description = product.Description;
                 exsitingProduct.StockQuantity = product.StockQuantity;
                 _productRepository.Update(exsitingProduct);
-                _productRepository.Save();
+                await _productRepository.SaveAsync();
                 return NoContent();
             }
             return NotFound();
         }
         [HttpDelete("{id:int}")]
-        public IActionResult DeleteProduct(int id)
+        public async Task<IActionResult> DeleteProductAsync(int id)
         {
-            Product? exsitingProduct = _productRepository.GetById(id);
+            Product? exsitingProduct = await _productRepository.GetByIdAsync(id);
             if (exsitingProduct != null) 
             {
                 _productRepository.Delete(exsitingProduct);
-                _productRepository.Save();
+                await _productRepository.SaveAsync();
                 return NoContent();
             }
             return NotFound();

@@ -1,4 +1,6 @@
-﻿namespace API_Task.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace API_Task.Models
 {
     public class Product
     {
@@ -7,6 +9,9 @@
         public string Description { get; set; }
         public double Price { get; set; }
         public int StockQuantity { get; set; }
-        public int? CategoruId { get; set; }
+
+        [ForeignKey("Category")]
+        public int? CategoryId { get; set; }
+        public Category Category { get; set; }
     }
 }

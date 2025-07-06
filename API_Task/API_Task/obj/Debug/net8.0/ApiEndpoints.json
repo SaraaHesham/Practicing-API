@@ -1,7 +1,33 @@
 [
   {
+    "ContainingType": "API_Task.Controllers.CategoryController",
+    "Method": "GetCategoryWithProducts",
+    "RelativePath": "api/Category/{Id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "API_Task.DTO.CategoryWithListOfProductsDTO",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
     "ContainingType": "API_Task.Controllers.ProductController",
-    "Method": "GetAllProducts",
+    "Method": "GetAllProductsAsync",
     "RelativePath": "api/Product",
     "HttpMethod": "GET",
     "IsController": true,
@@ -11,7 +37,7 @@
   },
   {
     "ContainingType": "API_Task.Controllers.ProductController",
-    "Method": "AddProduct",
+    "Method": "AddProductAsync",
     "RelativePath": "api/Product",
     "HttpMethod": "POST",
     "IsController": true,
@@ -27,7 +53,7 @@
   },
   {
     "ContainingType": "API_Task.Controllers.ProductController",
-    "Method": "GetProductById",
+    "Method": "GetProductByIdAsync",
     "RelativePath": "api/Product/{id}",
     "HttpMethod": "GET",
     "IsController": true,
@@ -43,7 +69,7 @@
   },
   {
     "ContainingType": "API_Task.Controllers.ProductController",
-    "Method": "UpdateProduct",
+    "Method": "UpdateProductAsync",
     "RelativePath": "api/Product/{id}",
     "HttpMethod": "PUT",
     "IsController": true,
@@ -64,7 +90,7 @@
   },
   {
     "ContainingType": "API_Task.Controllers.ProductController",
-    "Method": "DeleteProduct",
+    "Method": "DeleteProductAsync",
     "RelativePath": "api/Product/{id}",
     "HttpMethod": "DELETE",
     "IsController": true,

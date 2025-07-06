@@ -1,5 +1,6 @@
 ﻿using API_Task.Data;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace API_Task.Repository
 {
@@ -13,20 +14,31 @@ namespace API_Task.Repository
             _context = context;
             _dbSet = _context.Set<T>();
         }
-
-        public IEnumerable<T> GetAll()
+        public async Task<IEnumerable<T>> GetAllAsync()
         {
-            return _dbSet.ToList();
+            return await _dbSet.ToListAsync();
         }
 
-        public T GetById(int id)
+        public async Task<T> GetByIdAsync(int id)
         {
-            return _dbSet.Find(id);
+            return await _dbSet.FindAsync(id);
+        }
+        public async Task<T?> GetByIdWithIncludesAsync(Expression<Func<T, bool>> predicate,
+                                                       params Expression<Func<T, object>>[] includes)
+        {
+            IQueryable<T> query = _dbSet;
+
+            foreach (var include in includes)
+            {
+                query = query.Include(include);
+            }
+
+            return await query.FirstOrDefaultAsync(predicate);
         }
 
-        public void Add(T entity)
+        public async Task AddAsync(T entity)
         {
-            _dbSet.Add(entity);
+            await _dbSet.AddAsync(entity);
         }
 
         public void Update(T entity)
@@ -39,9 +51,9 @@ namespace API_Task.Repository
             _dbSet.Remove(entity);
         }
 
-        public void Save()
+        public async Task SaveAsync()
         {
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
     }
 
